@@ -6,7 +6,7 @@ import requests
 import json
 
 #api details
-clientId = '915ca6e9-7319-4fec-bc9a-8ca62fb68efa'
+clientId = '********-****-****-****-************'
 serverName = "servicedeskonline.sdiad.simedarbyindustrial.com"
 baseUri = "http://" + serverName + "/CherwellAPI/"
 tokenUri = baseUri + "token"
@@ -16,8 +16,8 @@ tokenReqBody = {
     "Accept": "application/json",
     "grant_type": "password",
     "client_id": clientId,
-    "username": "csdapi",
-    "password": "Dq9clse3"
+    "username": "********",
+    "password": "********"
 }
 
 #Rec IDs
@@ -37,8 +37,8 @@ def secureAccess():
         #"username": input("Please enter username: "),
         #"password": input("Please enter password: ")
         #update later to manual password
-        "username": "admin_harodav",
-        "password": "Xdq5pe3L"
+        "username": "********",
+        "password": "********"
     }
     accessToken = requests.post(url = tokenUri, data = tokenReqBody, json=True)
     #authMode = "Internal"
