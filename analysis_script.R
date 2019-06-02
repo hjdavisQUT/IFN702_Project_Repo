@@ -31,9 +31,52 @@ survey_df$Stat_SLAResponseBreached <- factor(survey_df$Stat_SLAResponseBreached)
 survey_df$Stat_SLAResolutionBreached <- factor(survey_df$Stat_SLAResolutionBreached)
 sapply(survey_df, class)
 
+#Filter out non IT teams
+survey_df <- filter(survey_df, TechnicianTeam != "BTP")
+survey_df <- filter(survey_df, TechnicianTeam != "Cherwell Admin")
+survey_df <- filter(survey_df, TechnicianTeam != "Core Systems")
+survey_df <- filter(survey_df, TechnicianTeam != "CRM Support")
+survey_df <- filter(survey_df, TechnicianTeam != "DBSi")
+survey_df <- filter(survey_df, TechnicianTeam != "HD Technology MineStar Team")
+survey_df <- filter(survey_df, TechnicianTeam != "HD Technology Service Desk")
+survey_df <- filter(survey_df, TechnicianTeam != "HR Services")
+survey_df <- filter(survey_df, TechnicianTeam != "IT Manager")
+survey_df <- filter(survey_df, TechnicianTeam != "IT Service & Support Manager")
+survey_df <- filter(survey_df, TechnicianTeam != "Payroll")
+survey_df <- filter(survey_df, TechnicianTeam != "Solutions Integration")
+survey_df <- filter(survey_df, TechnicianTeam != "WMS Ops Support")
+survey_df <- filter(survey_df, TechnicianTeam != "XAPT")
+survey_df <- filter(survey_df, TechnicianTeam != "dbsi")
+
 #Score histogram
 ggplot(data = survey_df, aes(x = Score)) +
-  geom_histogram(bins = 5, color = "black", fill = "grey") +
-  labs(x = "Score", y = "Count") + 
+  geom_histogram(bins = 20, color = "black", fill = "grey") +
+  labs(x = "Average Score", y = "Count") + 
+  facet_wrap( ~ TechnicianTeam) +
   theme_bw()
 
+survey_df %>%
+  ggplot(aes(y =Score)) +
+  geom_boxplot(colour = "black", fill = "grey") +
+  scale_y_continuous(limits = c(0,5)) +
+  theme_bw() +
+  facet_wrap( ~ TechnicianTeam) +
+  labs(y = "Survey Score", x = "Service")
+
+survey_df %>%
+  mutate(TechnicianTeam = fct_lump(TechnicianTeam, n=-5)) %>%
+  ggplot(aes(y =Score, x = TechnicianTeam)) +
+  geom_boxplot(colour = "black", fill = "grey") +
+  scale_y_continuous(limits = c(0,5)) +
+  theme_bw() +
+  labs(y = "Survey Score", x = "Service")
+
+survey_df %>%
+  ggplot(aes(y =Score, x = Service)) +
+  geom_point(colour = "black", fill = "grey") +
+  scale_y_continuous(limits = c(0,5)) +
+  theme_bw() +
+  facet_wrap( ~ TechnicianTeam) +
+  labs(y = "Survey Score", x = "Service")
+
+summary(survey_df)
